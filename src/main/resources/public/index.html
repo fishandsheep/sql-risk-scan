@@ -65,8 +65,6 @@
                 body: formData,
             })).json();
             this.sqls = res;
-
-            console.log(this.sqls.total/this.pageSize)
         }
     }">
         <div class="flex">
@@ -104,7 +102,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <template x-for="(sql,index) in sqls.results" :key="index">
+                    <template x-for="(sql,index) in sqls.result" :key="index">
                         <tr>
                             <td x-text="sql.count"></td>
                             <td x-text="sql.content"></td>
@@ -114,15 +112,16 @@
                 </tbody>
             </table>
         </div>
-        <div class="flex justify-center items-center pt-4 pb-12 relative" x-show="sqls.total">
+        <div class="flex justify-center items-center pt-4 pb-12 relative" x-show="sqls.totalRecords">
             <button class="btn btn-info left-0 inset-y-4 absolute" @click="export">Export</button>
 
-            <div class="mr-2" x-text="'共' +sqls.total+ '条'"></div>
+            <div class="mr-2" x-text="'共' +sqls.totalRecords+ '条'"></div>
             <div class="join">
                 <button class="join-item btn" :disabled="currentPage == 1" @click="parse(currentPage--)">«</button>
                 <button class="join-item btn" x-model="currentPage" x-text="'Page ' + currentPage"></button>
                 <button class="join-item btn" :disabled="currentPage >= sqls.total/pageSize"
-                    @click="parse(currentPage++)">»</button>
+                        @click="parse(currentPage++)">»
+                </button>
             </div>
         </div>
 
